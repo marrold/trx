@@ -97,6 +97,8 @@ static int send_one_frame(snd_pcm_t *snd,
 	if (z < 0) {
 		fprintf(stderr, "opus_encode_float: %s\n", opus_strerror(z));
 		return -1;
+	} else if ( z == 1) { /* If the packet length is one DTX is active, so we don't send the packet*/
+		return 0;
 	}
 
 	rtp_session_send_with_ts(session, packet, z, ts);
