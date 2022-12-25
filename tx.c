@@ -165,7 +165,7 @@ static void usage(FILE *fd)
 
 int main(int argc, char *argv[])
 {
-	int r, error;
+	int r, error, ret;
 	size_t bytes_per_frame;
 	unsigned int ts_per_frame;
 	snd_pcm_t *snd;
