@@ -238,10 +238,10 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	ret = opus_encoder_ctl(enc, OPUS_SET_DTX(1));
+	ret = opus_encoder_ctl(encoder, OPUS_SET_DTX(1));
  	if (ret != OPUS_OK) {
 		fprintf(stderr, "opus_encoder_ctl: Error enabling DTX");		
-		return -1
+		return -1;
 	}
 
 
