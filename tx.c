@@ -184,6 +184,7 @@ int main(int argc, char *argv[])
 		port = DEFAULT_PORT;
 
 	fputs(COPYRIGHT "\n", stderr);
+	fputs("2E0SIP's dodgy DTX fork\n", stderr);
 
 	for (;;) {
 		int c;
@@ -236,6 +237,14 @@ int main(int argc, char *argv[])
 			opus_strerror(error));
 		return -1;
 	}
+
+	ret = opus_encoder_ctl(enc, OPUS_SET_DTX(1));
+ 	if (ret != OPUS_OK) {
+		fprintf(stderr, "opus_encoder_ctl: Error enabling DTX");		
+		return -1
+	}
+
+
 
 	bytes_per_frame = kbps * 1024 * frame / rate / 8;
 
