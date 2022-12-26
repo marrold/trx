@@ -8,6 +8,7 @@ PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 
 CFLAGS += -MMD -Wall
+LDFLAGS="-Wl,--copy-dt-needed-entries"
 
 LDLIBS_ASOUND ?= -lasound
 LDLIBS_OPUS ?= -lopus

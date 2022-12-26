@@ -97,11 +97,10 @@ static int send_one_frame(snd_pcm_t *snd,
 	if (z < 0) {
 		fprintf(stderr, "opus_encode_float: %s\n", opus_strerror(z));
 		return -1;
-	} else if ( z == 1) { /* If the packet length is one DTX is active, so we don't send the packet*/
-		return 0;
+	} else if ( z > 1) { /* If the packet length is greater than one DTX is not active, so we send the packet*/
+		rtp_session_send_with_ts(session, packet, z, ts);
 	}
 
-	rtp_session_send_with_ts(session, packet, z, ts);
 	ts += ts_per_frame;
 
 	return 0;
@@ -186,7 +185,7 @@ int main(int argc, char *argv[])
 		port = DEFAULT_PORT;
 
 	fputs(COPYRIGHT "\n", stderr);
-	fputs("2E0SIP's dodgy DTX fork\n", stderr);
+	fputs("2E0SIP's DTX fork\n", stderr);
 
 	for (;;) {
 		int c;
@@ -251,6 +250,7 @@ int main(int argc, char *argv[])
 	bytes_per_frame = kbps * 1024 * frame / rate / 8;
 
 	/* Follow the RFC, payload 0 has 8kHz reference rate */
+	/* 960 * 8000 / 48000 = 160 */
 
 	ts_per_frame = frame * 8000 / rate;
 

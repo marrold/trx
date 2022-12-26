@@ -195,6 +195,7 @@ int main(int argc, char *argv[])
 		port = DEFAULT_PORT;
 
 	fputs(COPYRIGHT "\n", stderr);
+	fputs("2E0SIP's DTX fork\n", stderr);
 
 	for (;;) {
 		int c;
@@ -245,6 +246,7 @@ int main(int argc, char *argv[])
 
 	ortp_init();
 	ortp_scheduler_init();
+	ortp_set_log_level_mask(NULL, ORTP_ERROR);
 	session = create_rtp_recv(addr, port, jitter);
 	assert(session != NULL);
 
